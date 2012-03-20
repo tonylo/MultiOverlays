@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:padding="10px">
+   
+	<FrameLayout android:id="@+id/frameLayout1"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:orientation="horizontal" android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+            android:layout_marginLeft="0px"
+	        />
+	<FrameLayout android:id="@+id/frameLayout2"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignLeft="@id/frameLayout1"
+            android:layout_alignTop="@id/frameLayout1"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	<FrameLayout android:id="@+id/frameLayout3"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignLeft="@id/frameLayout2"
+            android:layout_alignTop="@id/frameLayout2"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	        
+	<FrameLayout android:id="@+id/frameLayout4"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignLeft="@id/frameLayout3"
+	        android:layout_alignTop="@id/frameLayout3"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	        
+	<FrameLayout android:id="@+id/frameLayout5"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignLeft="@id/frameLayout4"
+	         android:layout_alignTop="@id/frameLayout4"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	        
+	<FrameLayout android:id="@+id/frameLayout6"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignTop="@id/frameLayout5"
+	        android:layout_alignLeft="@id/frameLayout5"
+	        android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	
+	<FrameLayout android:id="@+id/frameLayout7"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignTop="@id/frameLayout6"
+	        android:layout_alignLeft="@id/frameLayout6"
+	        android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+		
+	<FrameLayout android:id="@+id/frameLayout8"
+	        android:layout_width="1152px" android:layout_height="768px"
+	        android:layout_alignTop="@id/frameLayout7"
+	        android:layout_alignLeft="@id/frameLayout7"
+	        android:layout_marginLeft="10px"
+            android:layout_marginTop="10px"
+	        android:orientation="horizontal"
+	        />
+	
+	<Button android:id="@+id/gobutton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:enabled="false"
+	    android:text="Start" />
+		
+	<Button android:id="@+id/rotateButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_marginTop="150px"
+	    android:visibility="invisible"
+	    android:text="Rotate" />
+	
+	<Button android:id="@+id/reflectionButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@id/rotateButton"
+	    android:visibility="invisible"
+	    android:text="Reflect" />
+	
+	<Button android:id="@+id/rotateAllButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@id/reflectionButton"
+	    android:visibility="invisible"
+	    android:text="Rotate All" />
+	    
+	
+	<Button android:id="@+id/alphaDown"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentRight="true"
+	    android:text="-" />
+	
+	<Button android:id="@+id/alphaUp"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/alphaDown"
+	    android:layout_above="@+id/alphaDown"
+	    android:text="+" />
+	
+	<Button android:id="@+id/clearEveryFrame"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toLeftOf="@+id/alphaDown"
+	    android:layout_alignBottom="@+id/alphaDown"
+	    android:text="glClear() on" />
+	
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/imageViewLogo"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS1"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS1"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS2"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS2"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS3"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS3"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS4"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS4"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS5"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS5"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS6"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS6"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS7"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS7"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:id="@+id/textFPS8"
+	/>
+	
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/textFPS8"
+	    android:layout_alignLeft="@+id/imageViewLogo"
+	    android:layout_marginTop="10px"
+	    android:layout_marginLeft="-30px"
+	    android:visibility="invisible"
+	    android:id="@+id/textFPSAverage"
+	/>
+	
+	<ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="85px"
+        android:layout_height="85px" 
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>
