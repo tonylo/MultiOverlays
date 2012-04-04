@@ -69,6 +69,16 @@ public class MultiOverlaysActivity extends Activity
         	setContentView(R.layout.main);
         else if(width == 864 && height == 480)
         	setContentView(R.layout.main_blaze);
+        else
+        {
+        	// Hack but better than nothing
+        	AlertDialog.Builder builder_res = new AlertDialog.Builder(this);
+            builder_res.setTitle("Unhandled device resolution");
+        	AlertDialog alert_res = builder_res.create();
+            alert_res.show();
+            if (alert_res.isShowing())
+            	return;
+        }
         
         
         final CharSequence[] items_res = {"640x480","1024x768", "1152x768", "1280x720", "1920x1080"};
