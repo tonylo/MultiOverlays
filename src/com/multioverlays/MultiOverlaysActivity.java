@@ -22,6 +22,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -41,21 +42,21 @@ public class MultiOverlaysActivity extends Activity
     private short MAX_VIDEOS = 8;
     private int LAYER_WIDTH = 1152;
     private int LAYER_HEIGHT = 768;
-    private int[] frameViewIdArray;
+    private int[] mFrameViewIdArray;
 
     public void onCreate(Bundle icicle) {
     	   	
         super.onCreate(icicle);
         
-        frameViewIdArray = new int[MAX_VIDEOS];
-        frameViewIdArray[0] = R.id.frameLayout1;
-        frameViewIdArray[1] = R.id.frameLayout2;
-        frameViewIdArray[2] = R.id.frameLayout3;
-        frameViewIdArray[3] = R.id.frameLayout4;
-        frameViewIdArray[4] = R.id.frameLayout5;
-        frameViewIdArray[5] = R.id.frameLayout6;
-        frameViewIdArray[6] = R.id.frameLayout7;
-        frameViewIdArray[7] = R.id.frameLayout8;
+        mFrameViewIdArray = new int[MAX_VIDEOS];
+        mFrameViewIdArray[0] = R.id.frameLayout1;
+        mFrameViewIdArray[1] = R.id.frameLayout2;
+        mFrameViewIdArray[2] = R.id.frameLayout3;
+        mFrameViewIdArray[3] = R.id.frameLayout4;
+        mFrameViewIdArray[4] = R.id.frameLayout5;
+        mFrameViewIdArray[5] = R.id.frameLayout6;
+        mFrameViewIdArray[6] = R.id.frameLayout7;
+        mFrameViewIdArray[7] = R.id.frameLayout8;
 
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -181,6 +182,36 @@ public class MultiOverlaysActivity extends Activity
         ((Button) findViewById(R.id.clearEveryFrame)).setOnClickListener(mClearEveryFrame);
     }   
     
+    public int getMaxFrameViewIdx() { return MAX_VIDEOS; }
+    public int getFrameViewId(int idx) { return mFrameViewIdArray[idx]; }
+
+	class OffsetsClickListener implements OnClickListener {
+		private MultiOverlaysActivity mActivity;
+		private boolean mOffsetsOn = true;
+
+		public OffsetsClickListener(MultiOverlaysActivity aActivity) {
+			mActivity = aActivity;
+		}
+		@Override
+    	public void onClick(View v) {
+    		int maxid = mActivity.getMaxFrameViewIdx();
+    		mOffsetsOn = !mOffsetsOn;
+    		for (int i = 0; i < maxid; i++) {
+    			int fvId = mActivity.getFrameViewId(i);
+    			FrameLayout fl = (FrameLayout) mActivity.findViewById(fvId);
+    			RelativeLayout.LayoutParams p = (RelativeLayout.LayoutParams)fl.getLayoutParams();
+    			if (mOffsetsOn) {
+    				p.setMargins(10, 10, 0, 0);
+    			} else {
+    				p.setMargins(0, 0, 0, 0);
+    			}
+    			fl.setLayoutParams(p);
+    		}
+    	}
+    };
+    
+    OnClickListener mToggleOffsets = new OffsetsClickListener(this);
+
     OnClickListener mClearEveryFrame = new OnClickListener() {
         @Override
         public void onClick(View v) {
