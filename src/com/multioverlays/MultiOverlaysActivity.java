@@ -41,11 +41,22 @@ public class MultiOverlaysActivity extends Activity
     private short MAX_VIDEOS = 8;
     private int LAYER_WIDTH = 1152;
     private int LAYER_HEIGHT = 768;
+    private int[] frameViewIdArray;
 
     public void onCreate(Bundle icicle) {
     	   	
         super.onCreate(icicle);
         
+        frameViewIdArray = new int[MAX_VIDEOS];
+        frameViewIdArray[0] = R.id.frameLayout1;
+        frameViewIdArray[1] = R.id.frameLayout2;
+        frameViewIdArray[2] = R.id.frameLayout3;
+        frameViewIdArray[3] = R.id.frameLayout4;
+        frameViewIdArray[4] = R.id.frameLayout5;
+        frameViewIdArray[5] = R.id.frameLayout6;
+        frameViewIdArray[6] = R.id.frameLayout7;
+        frameViewIdArray[7] = R.id.frameLayout8;
+
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
