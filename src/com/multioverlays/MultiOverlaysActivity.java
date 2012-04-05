@@ -616,104 +616,18 @@ public class MultiOverlaysActivity extends Activity
     
     private void initSurfaceTextures()
     {
-    	FrameLayout fl;
+    	//FrameLayout fl;
     	TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tvAVG1, tvAVG2, tvAVG3, tvAVG4, tvAVG5, tvAVG6, tvAVG7, tvAVG8;
     	FrameLayout previewBlock1, previewBlock2, previewBlock3, previewBlock4, previewBlock5, previewBlock6, previewBlock7, previewBlock8;
     	SurfaceTextureView surfaceTextureView1, surfaceTextureView2, surfaceTextureView3, surfaceTextureView4, surfaceTextureView5, surfaceTextureView6, surfaceTextureView7, surfaceTextureView8; 
     	Timer timing1, timing2, timing3, timing4, timing5, timing6, timing7, timing8, timingAVG1, timingAVG2, timingAVG3, timingAVG4, timingAVG5, timingAVG6, timingAVG7, timingAVG8;
-    	
-        switch(MAX_VIDEOS)
-        {
-	        case 1:
-		        fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        break;
-	        case 2:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        break;
-	        case 3:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        break;
-	        case 4:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout4);
-		        fl.addView(new SurfaceTextureView(this));
-		        break;
-	        case 5:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout4);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout5);
-		        fl.addView(new SurfaceTextureView(this));
-		        break;
-	        case 6:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout4);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout5);
-		        fl.addView(new SurfaceTextureView(this));
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout6);
-	            fl.addView(new SurfaceTextureView(this));
-	            break;
-	        case 7:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout4);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout5);
-		        fl.addView(new SurfaceTextureView(this));
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout6);
-	            fl.addView(new SurfaceTextureView(this));
-	            fl = (FrameLayout)findViewById(R.id.frameLayout7);
-	            fl.addView(new SurfaceTextureView(this));
-	            break;
-	        case 8:
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout1);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout2);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout3);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout4);
-		        fl.addView(new SurfaceTextureView(this));
-		        fl = (FrameLayout)findViewById(R.id.frameLayout5);
-		        fl.addView(new SurfaceTextureView(this));
-	        	fl = (FrameLayout)findViewById(R.id.frameLayout6);
-	            fl.addView(new SurfaceTextureView(this));
-	            fl = (FrameLayout)findViewById(R.id.frameLayout7);
-	            fl.addView(new SurfaceTextureView(this));
-	            fl = (FrameLayout)findViewById(R.id.frameLayout8);
-	            fl.addView(new SurfaceTextureView(this));
-	            break;
-        }
-  
+
+		int maxid = getMaxFrameViewIdx();
+		for (int i = 0; i < maxid; i++) {
+			int fvId = getFrameViewId(i);
+			FrameLayout fl = (FrameLayout)findViewById(fvId);
+			fl.addView(new SurfaceTextureView(this));
+		}
         
         switch(MAX_VIDEOS)
         {
