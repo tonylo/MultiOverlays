@@ -39,16 +39,17 @@ import android.widget.Toast;
 public class MultiOverlaysActivity extends Activity 
 {
     private static final String TAG = "Multioverlays demo";
-    private short MAX_VIDEOS = 8;
+    private short mNumLayers = 8;
     private int LAYER_WIDTH = 1152;
     private int LAYER_HEIGHT = 768;
     private int[] mFrameViewIdArray;
+    private int[] mTextViewIdArray;
 
     public void onCreate(Bundle icicle) {
     	   	
         super.onCreate(icicle);
         
-        mFrameViewIdArray = new int[MAX_VIDEOS];
+        mFrameViewIdArray = new int[mNumLayers];
         mFrameViewIdArray[0] = R.id.frameLayout1;
         mFrameViewIdArray[1] = R.id.frameLayout2;
         mFrameViewIdArray[2] = R.id.frameLayout3;
@@ -58,6 +59,16 @@ public class MultiOverlaysActivity extends Activity
         mFrameViewIdArray[6] = R.id.frameLayout7;
         mFrameViewIdArray[7] = R.id.frameLayout8;
 
+        mTextViewIdArray = new int[mNumLayers];
+        mTextViewIdArray[0] = R.id.textFPS1;
+        mTextViewIdArray[1] = R.id.textFPS2;
+        mTextViewIdArray[2] = R.id.textFPS3;
+        mTextViewIdArray[3] = R.id.textFPS4;
+        mTextViewIdArray[4] = R.id.textFPS5;
+        mTextViewIdArray[5] = R.id.textFPS6;
+        mTextViewIdArray[6] = R.id.textFPS7;
+        mTextViewIdArray[7] = R.id.textFPS8;
+        
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
@@ -116,7 +127,7 @@ public class MultiOverlaysActivity extends Activity
             	RelativeLayout.LayoutParams rl1 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
             	findViewById(R.id.frameLayout1).setLayoutParams(rl1);
             	
-            	for (int flId = 1; flId < MAX_VIDEOS; flId++) {
+            	for (int flId = 1; flId < mNumLayers; flId++) {
             		int idprev = getFrameViewId(flId-1);
             		int id = getFrameViewId(flId);
             		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
@@ -145,7 +156,7 @@ public class MultiOverlaysActivity extends Activity
         builder.setTitle("Choose # of layers to be displayed");
         builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-            	MAX_VIDEOS = (short) Integer.parseInt((String) items[item]);
+            	mNumLayers = (short) Integer.parseInt((String) items[item]);
                 dialog.dismiss();
             }
         });
@@ -162,8 +173,9 @@ public class MultiOverlaysActivity extends Activity
         ((Button) findViewById(R.id.alignFrames)).setOnClickListener(mToggleOffsets);
     }   
     
-    public int getMaxFrameViewIdx() { return MAX_VIDEOS; }
+    public int getNumLayers() { return mNumLayers; }
     public int getFrameViewId(int idx) { return mFrameViewIdArray[idx]; }
+    public int getTextViewId(int idx) { return mTextViewIdArray[idx]; }
 
 	class OffsetsClickListener implements OnClickListener {
 		private MultiOverlaysActivity mActivity;
@@ -174,7 +186,7 @@ public class MultiOverlaysActivity extends Activity
 		}
 		@Override
     	public void onClick(View v) {
-    		int maxid = mActivity.getMaxFrameViewIdx();
+    		int maxid = mActivity.getNumLayers();
     		mOffsetsOn = !mOffsetsOn;
     		for (int i = 0; i < maxid; i++) {
     			int fvId = mActivity.getFrameViewId(i);
@@ -201,7 +213,7 @@ public class MultiOverlaysActivity extends Activity
         	else
         		((Button) findViewById(R.id.clearEveryFrame)).setText("glClear() on");
         	
-        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
         		((SurfaceTextureView)(fl).getChildAt(0)).toggleClearEveryFrame();
         	}
@@ -211,7 +223,7 @@ public class MultiOverlaysActivity extends Activity
     OnClickListener mAlphaUpListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
         		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaUp();
         	}
@@ -221,7 +233,7 @@ public class MultiOverlaysActivity extends Activity
     OnClickListener mAlphaDownListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
         		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaDown();
         	}        	
@@ -231,360 +243,15 @@ public class MultiOverlaysActivity extends Activity
     private static double timeFPS = 0;
     private static double prev_time = 0;
     private static double fps = 0;
-
-//    private static class UpdaterAVG1 extends TimerTask {
-//	    private final TextView tvAVG;
-//	    private final TextView tv1;
-//	    private final SurfaceTextureView surfaceFPS1;
-//	
-//	    public UpdaterAVG1(TextView tv1, TextView tvAVG, SurfaceTextureView surfaceTextureView1) {
-//	        this.tvAVG = tvAVG;
-//	        this.tv1 = tv1;
-//	        this.surfaceFPS1 = surfaceTextureView1;
-//	    }
-//	
-//	    @Override
-//	    public void run() {
-//	    	tvAVG.post(new Runnable() {
-//	
-//	            public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//	            	int averageFPS = surfaceFPS1.getFrameCounter();
-//	            	tv1.setText("FPS = " + averageFPS);
-//	            	tvAVG.setText("AVG FPS = " + averageFPS);
-//	                surfaceFPS1.resetFrameCounter();
-//	            }
-//	        });
-//	    }
-//	}
-//    
-//    private static class UpdaterAVG2 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2;
-//
-//        public UpdaterAVG2(TextView tv1,TextView tv2, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 )/2;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
-//
-//    private static class UpdaterAVG3 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2,tv3;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3;
-//
-//        public UpdaterAVG3(TextView tv1,TextView tv2,TextView tv3,TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.tv3 = tv3;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//           this.surfaceFPS3 = surfaceTextureView3;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int FPS3 = surfaceFPS3.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 + FPS3)/3;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tv3.setText("FPS = " + FPS3);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                	surfaceFPS3.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
-//    
-//    private static class UpdaterAVG4 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2,tv3,tv4;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3,surfaceFPS4;
-//
-//        public UpdaterAVG4(TextView tv1,TextView tv2,TextView tv3,TextView tv4, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3, SurfaceTextureView surfaceTextureView4) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.tv3 = tv3;
-//           this.tv4 = tv4;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//           this.surfaceFPS3 = surfaceTextureView3;
-//           this.surfaceFPS4 = surfaceTextureView4;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int FPS3 = surfaceFPS3.getFrameCounter();
-//                	int FPS4 = surfaceFPS4.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 + FPS3 + FPS4)/4;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tv3.setText("FPS = " + FPS3);
-//                	tv4.setText("FPS = " + FPS4);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                	surfaceFPS3.resetFrameCounter();
-//                	surfaceFPS4.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
-//    
-//    private static class UpdaterAVG5 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2,tv3,tv4,tv5;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3,surfaceFPS4,surfaceFPS5;
-//
-//        public UpdaterAVG5(TextView tv1,TextView tv2,TextView tv3,TextView tv4,TextView tv5, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3, SurfaceTextureView surfaceTextureView4, SurfaceTextureView surfaceTextureView5) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.tv3 = tv3;
-//           this.tv4 = tv4;
-//           this.tv5 = tv5;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//           this.surfaceFPS3 = surfaceTextureView3;
-//           this.surfaceFPS4 = surfaceTextureView4;
-//           this.surfaceFPS5 = surfaceTextureView5;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int FPS3 = surfaceFPS3.getFrameCounter();
-//                	int FPS4 = surfaceFPS4.getFrameCounter();
-//                	int FPS5 = surfaceFPS5.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 + FPS3 + FPS4 + FPS5 )/5;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tv3.setText("FPS = " + FPS3);
-//                	tv4.setText("FPS = " + FPS4);
-//                	tv5.setText("FPS = " + FPS5);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                	surfaceFPS3.resetFrameCounter();
-//                	surfaceFPS4.resetFrameCounter();
-//                	surfaceFPS5.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
-//    
-//    private static class UpdaterAVG6 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2,tv3,tv4,tv5,tv6;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3,surfaceFPS4,surfaceFPS5,surfaceFPS6;
-//
-//        public UpdaterAVG6(TextView tv1,TextView tv2,TextView tv3,TextView tv4,TextView tv5,TextView tv6, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3, SurfaceTextureView surfaceTextureView4, SurfaceTextureView surfaceTextureView5, SurfaceTextureView surfaceTextureView6) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.tv3 = tv3;
-//           this.tv4 = tv4;
-//           this.tv5 = tv5;
-//           this.tv6 = tv6;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//           this.surfaceFPS3 = surfaceTextureView3;
-//           this.surfaceFPS4 = surfaceTextureView4;
-//           this.surfaceFPS5 = surfaceTextureView5;
-//           this.surfaceFPS6 = surfaceTextureView6;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int FPS3 = surfaceFPS3.getFrameCounter();
-//                	int FPS4 = surfaceFPS4.getFrameCounter();
-//                	int FPS5 = surfaceFPS5.getFrameCounter();
-//                	int FPS6 = surfaceFPS6.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 + FPS3 + FPS4 + FPS5 + FPS6)/6;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tv3.setText("FPS = " + FPS3);
-//                	tv4.setText("FPS = " + FPS4);
-//                	tv5.setText("FPS = " + FPS5);
-//                	tv6.setText("FPS = " + FPS6);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                	surfaceFPS3.resetFrameCounter();
-//                	surfaceFPS4.resetFrameCounter();
-//                	surfaceFPS5.resetFrameCounter();
-//                	surfaceFPS6.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
-//    
-//    private static class UpdaterAVG7 extends TimerTask {
-//        private final TextView tvAVG,tv1,tv2,tv3,tv4,tv5,tv6,tv7;
-//        private final SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3,surfaceFPS4,surfaceFPS5,surfaceFPS6,surfaceFPS7;
-//
-//        public UpdaterAVG7(TextView tv1,TextView tv2,TextView tv3,TextView tv4,TextView tv5,TextView tv6,TextView tv7, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3, SurfaceTextureView surfaceTextureView4, SurfaceTextureView surfaceTextureView5, SurfaceTextureView surfaceTextureView6, SurfaceTextureView surfaceTextureView7) {
-//           this.tvAVG = tvAVG;
-//           this.tv1 = tv1;
-//           this.tv2 = tv2;
-//           this.tv3 = tv3;
-//           this.tv4 = tv4;
-//           this.tv5 = tv5;
-//           this.tv6 = tv6;
-//           this.tv7 = tv7;
-//           this.surfaceFPS1 = surfaceTextureView1;
-//           this.surfaceFPS2 = surfaceTextureView2;
-//           this.surfaceFPS3 = surfaceTextureView3;
-//           this.surfaceFPS4 = surfaceTextureView4;
-//           this.surfaceFPS5 = surfaceTextureView5;
-//           this.surfaceFPS6 = surfaceTextureView6;
-//           this.surfaceFPS7 = surfaceTextureView7;
-//        }
-//
-//        @Override
-//        public void run() {
-//        	tvAVG.post(new Runnable() {
-//
-//                public void run() {
-//	            	timeFPS = System.currentTimeMillis() - prev_time;
-//	            	prev_time = System.currentTimeMillis();
-//	            	if(timeFPS > 0)
-//	            		fps = 1/(timeFPS/1000);
-//	            	Log.d("time", "time = " + timeFPS);
-//                	int FPS1 = surfaceFPS1.getFrameCounter();
-//                	int FPS2 = surfaceFPS2.getFrameCounter();
-//                	int FPS3 = surfaceFPS3.getFrameCounter();
-//                	int FPS4 = surfaceFPS4.getFrameCounter();
-//                	int FPS5 = surfaceFPS5.getFrameCounter();
-//                	int FPS6 = surfaceFPS6.getFrameCounter();
-//                	int FPS7 = surfaceFPS7.getFrameCounter();
-//                	int averageFPS = ( FPS1 + FPS2 + FPS3 + FPS4 + FPS5 + FPS6 + FPS7)/7;
-//                	tv1.setText("FPS = " + FPS1);
-//                	tv2.setText("FPS = " + FPS2);
-//                	tv3.setText("FPS = " + FPS3);
-//                	tv4.setText("FPS = " + FPS4);
-//                	tv5.setText("FPS = " + FPS5);
-//                	tv6.setText("FPS = " + FPS6);
-//                	tv7.setText("FPS = " + FPS7);
-//                	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-//                	surfaceFPS1.resetFrameCounter();
-//                	surfaceFPS2.resetFrameCounter();
-//                	surfaceFPS3.resetFrameCounter();
-//                	surfaceFPS4.resetFrameCounter();
-//                	surfaceFPS5.resetFrameCounter();
-//                	surfaceFPS6.resetFrameCounter();
-//                	surfaceFPS7.resetFrameCounter();
-//                }
-//            });
-//        }
-//    }
     
-    private static class UpdaterAVG8 extends TimerTask {
+    private static class UpdaterAVG extends TimerTask {
     	private TextView[] mTvArray;
     	private SurfaceTextureView[] mStArray;
-    	private int mCount;
-    	
+    	private int mCount;    	
     	private TextView tvAVG;
-        private TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8;
-        private SurfaceTextureView surfaceFPS1,surfaceFPS2,surfaceFPS3,surfaceFPS4,surfaceFPS5,surfaceFPS6,surfaceFPS7,surfaceFPS8;
 
-        public UpdaterAVG8(TextView tv1,TextView tv2,TextView tv3,TextView tv4,TextView tv5,TextView tv6,TextView tv7,TextView tv8, TextView tvAVG, SurfaceTextureView surfaceTextureView1, SurfaceTextureView surfaceTextureView2, SurfaceTextureView surfaceTextureView3, SurfaceTextureView surfaceTextureView4, SurfaceTextureView surfaceTextureView5, SurfaceTextureView surfaceTextureView6, SurfaceTextureView surfaceTextureView7, SurfaceTextureView surfaceTextureView8) {
-           this.tvAVG = tvAVG;
-           mCount = 8;
-           mTvArray = new TextView[mCount];
-           mStArray = new SurfaceTextureView[mCount];
-           mTvArray[0] = this.tv1 = tv1;
-           mTvArray[1] = this.tv2 = tv2;
-           mTvArray[2] = this.tv3 = tv3;
-           mTvArray[3] = this.tv4 = tv4;
-           mTvArray[4] = this.tv5 = tv5;
-           mTvArray[5] = this.tv6 = tv6;
-           mTvArray[6] = this.tv7 = tv7;
-           mTvArray[7] = this.tv8 = tv8;
-           mStArray[0] = this.surfaceFPS1 = surfaceTextureView1;
-           mStArray[1] = this.surfaceFPS2 = surfaceTextureView2;
-           mStArray[2] = this.surfaceFPS3 = surfaceTextureView3;
-           mStArray[3] = this.surfaceFPS4 = surfaceTextureView4;
-           mStArray[4] = this.surfaceFPS5 = surfaceTextureView5;
-           mStArray[5] = this.surfaceFPS6 = surfaceTextureView6;
-           mStArray[6] = this.surfaceFPS7 = surfaceTextureView7;
-           mStArray[7] = this.surfaceFPS8 = surfaceTextureView8;
-        }
-
-
-        public UpdaterAVG8(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
-        	tvAVG = tvAVG;
-        	mCount = aCount;
-            mTvArray =   aTvArray;
-            mStArray = aStArray;
+        public UpdaterAVG(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
+        	tvAVG = aTvAVG; mCount = aCount; mTvArray = aTvArray; mStArray = aStArray;
         }
         
         @Override
@@ -610,64 +277,25 @@ public class MultiOverlaysActivity extends Activity
                 }
             });
         }
-    }
-    
+    }    
     
     private void initSurfaceTextures()
     {
-    	//FrameLayout fl;
-    	TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tvAVG1, tvAVG2, tvAVG3, tvAVG4, tvAVG5, tvAVG6, tvAVG7, tvAVG8;
-    	FrameLayout previewBlock1, previewBlock2, previewBlock3, previewBlock4, previewBlock5, previewBlock6, previewBlock7, previewBlock8;
-    	SurfaceTextureView surfaceTextureView1, surfaceTextureView2, surfaceTextureView3, surfaceTextureView4, surfaceTextureView5, surfaceTextureView6, surfaceTextureView7, surfaceTextureView8; 
-    	Timer timing1, timing2, timing3, timing4, timing5, timing6, timing7, timing8, timingAVG1, timingAVG2, timingAVG3, timingAVG4, timingAVG5, timingAVG6, timingAVG7, timingAVG8;
+		int maxid = getNumLayers();
+		TextView []tvArray = new TextView[maxid];
+		TextView tvAVG = (TextView)findViewById(R.id.textFPSAverage);
+		SurfaceTextureView []stArray = new SurfaceTextureView[maxid];
 
-		int maxid = getMaxFrameViewIdx();
 		for (int i = 0; i < maxid; i++) {
 			int fvId = getFrameViewId(i);
 			FrameLayout fl = (FrameLayout)findViewById(fvId);
-			fl.addView(new SurfaceTextureView(this));
+			SurfaceTextureView stv = new SurfaceTextureView(this);
+			fl.addView(stv);
+			stArray[i] = stv;
+			tvArray[i] = (TextView)findViewById(getTextViewId(i));
 		}
-        
-        switch(MAX_VIDEOS)
-        {
-        	case 8:
-                tv1 = (TextView)findViewById(R.id.textFPS1); 
-            	previewBlock1 = (FrameLayout)findViewById(R.id.frameLayout1);        
-            	surfaceTextureView1 = (SurfaceTextureView)previewBlock1.getChildAt(0);
-                
-                tv2 = (TextView)findViewById(R.id.textFPS2);
-                previewBlock2 = (FrameLayout)findViewById(R.id.frameLayout2);        
-            	surfaceTextureView2 = (SurfaceTextureView)previewBlock2.getChildAt(0);
-                
-                tv3 = (TextView)findViewById(R.id.textFPS3);
-                previewBlock3 = (FrameLayout)findViewById(R.id.frameLayout3);        
-            	surfaceTextureView3 = (SurfaceTextureView)previewBlock3.getChildAt(0);
-                
-                tv4 = (TextView)findViewById(R.id.textFPS4);
-                previewBlock4 = (FrameLayout)findViewById(R.id.frameLayout4);        
-            	surfaceTextureView4 = (SurfaceTextureView)previewBlock4.getChildAt(0);
-                
-                tv5 = (TextView)findViewById(R.id.textFPS5);
-                previewBlock5 = (FrameLayout)findViewById(R.id.frameLayout5);        
-            	surfaceTextureView5 = (SurfaceTextureView)previewBlock5.getChildAt(0);
-                
-                tv6 = (TextView)findViewById(R.id.textFPS6);
-                previewBlock6 = (FrameLayout)findViewById(R.id.frameLayout6);        
-            	surfaceTextureView6 = (SurfaceTextureView)previewBlock6.getChildAt(0);
-            	
-            	tv7 = (TextView)findViewById(R.id.textFPS7);
-                previewBlock7 = (FrameLayout)findViewById(R.id.frameLayout7);        
-            	surfaceTextureView7 = (SurfaceTextureView)previewBlock7.getChildAt(0);
-            	
-            	tv8 = (TextView)findViewById(R.id.textFPS8);
-                previewBlock8 = (FrameLayout)findViewById(R.id.frameLayout8);        
-            	surfaceTextureView8 = (SurfaceTextureView)previewBlock8.getChildAt(0);
-                
-                tvAVG8 = (TextView)findViewById(R.id.textFPSAverage);
-    	        timingAVG8 = new Timer();
-    	        timingAVG8.scheduleAtFixedRate(new UpdaterAVG8(tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8,tvAVG8,surfaceTextureView1,surfaceTextureView2,surfaceTextureView3,surfaceTextureView4,surfaceTextureView5,surfaceTextureView6,surfaceTextureView7,surfaceTextureView8), 0, 1000);  	
-            	break;
-        }
-        
+
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new UpdaterAVG(maxid, tvArray, tvAVG, stArray), 0, 1000);
     }
 }
