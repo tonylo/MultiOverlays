@@ -190,6 +190,7 @@ public class MultiOverlaysActivity extends Activity
         ((Button) findViewById(R.id.alphaUp)).setOnClickListener(mAlphaUpListener);
         ((Button) findViewById(R.id.alphaDown)).setOnClickListener(mAlphaDownListener);
         ((Button) findViewById(R.id.clearEveryFrame)).setOnClickListener(mClearEveryFrame);
+        ((Button) findViewById(R.id.alignFrames)).setOnClickListener(mToggleOffsets);
     }   
     
     public int getMaxFrameViewIdx() { return MAX_VIDEOS; }
