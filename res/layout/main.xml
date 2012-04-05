@@ -119,8 +119,8 @@
 	<Button android:id="@+id/clearEveryFrame"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_toLeftOf="@+id/alphaDown"
-	    android:layout_alignBottom="@+id/alphaDown"
+	    android:layout_toLeftOf="@+id/alphaUp"
+	    android:layout_alignBottom="@+id/alphaUp"
 	    android:text="glClear() on" />
 	
 	
