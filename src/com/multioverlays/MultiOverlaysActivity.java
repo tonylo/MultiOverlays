@@ -112,50 +112,19 @@ public class MultiOverlaysActivity extends Activity
             		LAYER_WIDTH = 1920;
             		LAYER_HEIGHT = 1080;
             	}
+            	
             	RelativeLayout.LayoutParams rl1 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
             	findViewById(R.id.frameLayout1).setLayoutParams(rl1);
             	
-            	RelativeLayout.LayoutParams rl2 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl2.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout1).getId());
-            	rl2.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout1).getId());
-            	rl2.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout2).setLayoutParams(rl2);
-            	
-            	RelativeLayout.LayoutParams rl3 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl3.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout2).getId());
-            	rl3.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout2).getId());
-            	rl3.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout3).setLayoutParams(rl3);
-            	
-            	RelativeLayout.LayoutParams rl4 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl4.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout3).getId());
-            	rl4.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout3).getId());
-            	rl4.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout4).setLayoutParams(rl4);
-            	
-            	RelativeLayout.LayoutParams rl5 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl5.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout4).getId());
-            	rl5.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout4).getId());
-            	rl5.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout5).setLayoutParams(rl5);
-            	
-            	RelativeLayout.LayoutParams rl6 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl6.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout5).getId());
-            	rl6.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout5).getId());
-            	rl6.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout6).setLayoutParams(rl6);
-            	
-            	RelativeLayout.LayoutParams rl7 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl7.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout6).getId());
-            	rl7.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout6).getId());
-            	rl7.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout7).setLayoutParams(rl7);
-            	
-            	RelativeLayout.LayoutParams rl8 = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
-            	rl8.addRule(RelativeLayout.ALIGN_LEFT , findViewById(R.id.frameLayout7).getId());
-            	rl8.addRule(RelativeLayout.ALIGN_TOP , findViewById(R.id.frameLayout7).getId());
-            	rl8.setMargins(10, 10, 0, 0);
-            	findViewById(R.id.frameLayout8).setLayoutParams(rl8);
+            	for (int flId = 1; flId < MAX_VIDEOS; flId++) {
+            		int idprev = getFrameViewId(flId-1);
+            		int id = getFrameViewId(flId);
+            		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(LAYER_WIDTH,LAYER_HEIGHT);
+                	p.addRule(RelativeLayout.ALIGN_LEFT , findViewById(idprev).getId());
+                	p.addRule(RelativeLayout.ALIGN_TOP , findViewById(idprev).getId());
+                	p.setMargins(10, 10, 0, 0);
+                	findViewById(id).setLayoutParams(p);
+            	}
 
             	initSurfaceTextures();
     	    	((Button) findViewById(R.id.gobutton)).setVisibility(4);
