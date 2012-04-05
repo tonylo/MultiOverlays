@@ -244,38 +244,50 @@ public class MultiOverlaysActivity extends Activity
     private static double prev_time = 0;
     private static double fps = 0;
     
-    private static class UpdaterAVG extends TimerTask {
+    private static class ourRunnable implements Runnable {
     	private TextView[] mTvArray;
     	private SurfaceTextureView[] mStArray;
     	private int mCount;    	
     	private TextView tvAVG;
 
+        public ourRunnable(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
+        	tvAVG = aTvAVG; mCount = aCount; mTvArray = aTvArray; mStArray = aStArray;
+        }
+    	@Override
+        public void run() {
+        	timeFPS = System.currentTimeMillis() - prev_time;
+        	prev_time = System.currentTimeMillis();
+        	if(timeFPS > 0)
+        		fps = 1/(timeFPS/1000);
+        	Log.d("time", "time = " + timeFPS);
+        	
+        	int averageFPS = 0;
+        	for (int i = 0; i < mCount; i++) {
+        		int fps = mStArray[i].getFrameCounter();
+        		mTvArray[i].setText("FPS = " + fps);
+        		averageFPS += fps;
+        		mStArray[i].resetFrameCounter();
+        	}
+        	averageFPS /= mCount;
+        	tvAVG.setText("AVG FPS = " + (int)averageFPS);
+        }
+    }
+    
+    private static class UpdaterAVG extends TimerTask {
+    	private TextView[] mTvArray;
+    	private SurfaceTextureView[] mStArray;
+    	private int mCount;    	
+    	private TextView tvAVG;
+    	private ourRunnable mOurRunnable;
+
         public UpdaterAVG(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
         	tvAVG = aTvAVG; mCount = aCount; mTvArray = aTvArray; mStArray = aStArray;
+        	mOurRunnable = new ourRunnable(mCount, mTvArray, tvAVG, mStArray);
         }
         
         @Override
         public void run() {
-        	tvAVG.post(new Runnable() {
-
-                public void run() {
-	            	timeFPS = System.currentTimeMillis() - prev_time;
-	            	prev_time = System.currentTimeMillis();
-	            	if(timeFPS > 0)
-	            		fps = 1/(timeFPS/1000);
-	            	Log.d("time", "time = " + timeFPS);
-	            	
-	            	int averageFPS = 0;
-	            	for (int i = 0; i < mCount; i++) {
-	            		int fps = mStArray[i].getFrameCounter();
-	            		mTvArray[i].setText("FPS = " + fps);
-	            		averageFPS += fps;
-	            		mStArray[i].resetFrameCounter();
-	            	}
-	            	averageFPS /= mCount;
-	            	tvAVG.setText("AVG FPS = " + (int)averageFPS);
-                }
-            });
+        	tvAVG.post(mOurRunnable);
         }
     }    
     
