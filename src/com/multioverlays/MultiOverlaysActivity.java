@@ -50,24 +50,16 @@ public class MultiOverlaysActivity extends Activity
         super.onCreate(icicle);
         
         mFrameViewIdArray = new int[mNumLayers];
-        mFrameViewIdArray[0] = R.id.frameLayout1;
-        mFrameViewIdArray[1] = R.id.frameLayout2;
-        mFrameViewIdArray[2] = R.id.frameLayout3;
-        mFrameViewIdArray[3] = R.id.frameLayout4;
-        mFrameViewIdArray[4] = R.id.frameLayout5;
-        mFrameViewIdArray[5] = R.id.frameLayout6;
-        mFrameViewIdArray[6] = R.id.frameLayout7;
-        mFrameViewIdArray[7] = R.id.frameLayout8;
+        mFrameViewIdArray[0] = R.id.frameLayout1; mFrameViewIdArray[1] = R.id.frameLayout2;
+        mFrameViewIdArray[2] = R.id.frameLayout3; mFrameViewIdArray[3] = R.id.frameLayout4;
+        mFrameViewIdArray[4] = R.id.frameLayout5; mFrameViewIdArray[5] = R.id.frameLayout6;
+        mFrameViewIdArray[6] = R.id.frameLayout7; mFrameViewIdArray[7] = R.id.frameLayout8;
 
         mTextViewIdArray = new int[mNumLayers];
-        mTextViewIdArray[0] = R.id.textFPS1;
-        mTextViewIdArray[1] = R.id.textFPS2;
-        mTextViewIdArray[2] = R.id.textFPS3;
-        mTextViewIdArray[3] = R.id.textFPS4;
-        mTextViewIdArray[4] = R.id.textFPS5;
-        mTextViewIdArray[5] = R.id.textFPS6;
-        mTextViewIdArray[6] = R.id.textFPS7;
-        mTextViewIdArray[7] = R.id.textFPS8;
+        mTextViewIdArray[0] = R.id.textFPS1; mTextViewIdArray[1] = R.id.textFPS2;
+        mTextViewIdArray[2] = R.id.textFPS3; mTextViewIdArray[3] = R.id.textFPS4;
+        mTextViewIdArray[4] = R.id.textFPS5; mTextViewIdArray[5] = R.id.textFPS6;
+        mTextViewIdArray[6] = R.id.textFPS7; mTextViewIdArray[7] = R.id.textFPS8;
         
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
