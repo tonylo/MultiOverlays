@@ -44,6 +44,8 @@ public class MultiOverlaysActivity extends Activity
     private int LAYER_HEIGHT = 768;
     private int[] mFrameViewIdArray;
     private int[] mTextViewIdArray;
+	private SurfaceTextureView[] mStvArray;
+
 
     public void onCreate(Bundle icicle) {
     	   	
@@ -60,7 +62,7 @@ public class MultiOverlaysActivity extends Activity
         mTextViewIdArray[2] = R.id.textFPS3; mTextViewIdArray[3] = R.id.textFPS4;
         mTextViewIdArray[4] = R.id.textFPS5; mTextViewIdArray[5] = R.id.textFPS6;
         mTextViewIdArray[6] = R.id.textFPS7; mTextViewIdArray[7] = R.id.textFPS8;
-        
+
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
@@ -285,21 +287,43 @@ public class MultiOverlaysActivity extends Activity
     
     private void initSurfaceTextures()
     {
-		int maxid = getNumLayers();
+		int maxid = mNumLayers;
+        mStvArray = new SurfaceTextureView[mNumLayers];
+
 		TextView []tvArray = new TextView[maxid];
 		TextView tvAVG = (TextView)findViewById(R.id.textFPSAverage);
-		SurfaceTextureView []stArray = new SurfaceTextureView[maxid];
-
 		for (int i = 0; i < maxid; i++) {
 			int fvId = getFrameViewId(i);
 			FrameLayout fl = (FrameLayout)findViewById(fvId);
 			SurfaceTextureView stv = new SurfaceTextureView(this);
 			fl.addView(stv);
-			stArray[i] = stv;
+			mStvArray[i] = stv;
 			tvArray[i] = (TextView)findViewById(getTextViewId(i));
 		}
 
         Timer t = new Timer();
-        t.scheduleAtFixedRate(new UpdaterAVG(maxid, tvArray, tvAVG, stArray), 0, 1000);
+        t.scheduleAtFixedRate(new UpdaterAVG(maxid, tvArray, tvAVG, mStvArray), 0, 1000);
+    }
+    
+    public void onPause() {
+    	super.onPause();
+    	if (mStvArray == null) {
+    		return;
+    	}
+    	for (int i = 0; i < mNumLayers; i++) {
+    		if (mStvArray[i] != null)
+    			mStvArray[i].onPause();
+    	}
+    }
+    
+    public void onResume() {
+    	super.onResume();
+    	if (mStvArray == null) {
+    		return;
+    	}
+    	for (int i = 0; i < mNumLayers; i++) {
+    		if (mStvArray[i] != null)
+    			mStvArray[i].onResume();
+    	}
     }
 }
