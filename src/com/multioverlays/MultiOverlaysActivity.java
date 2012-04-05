@@ -232,60 +232,9 @@ public class MultiOverlaysActivity extends Activity
         	else
         		((Button) findViewById(R.id.clearEveryFrame)).setText("glClear() on");
         	
-        	switch(MAX_VIDEOS)
-        	{
-        	case 1:
-        		((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 2:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 3:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 4:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 5:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 6:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 7:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
-        	case 8:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).toggleClearEveryFrame();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout8)).getChildAt(0)).toggleClearEveryFrame();
-        		break;
+        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
+        		((SurfaceTextureView)(fl).getChildAt(0)).toggleClearEveryFrame();
         	}
         }
     };
@@ -293,60 +242,9 @@ public class MultiOverlaysActivity extends Activity
     OnClickListener mAlphaUpListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-        	switch(MAX_VIDEOS)
-        	{
-        	case 1:
-        		((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 2:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 3:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 4:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 5:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 6:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 7:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).setAlphaUp();
-        		break;
-        	case 8:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).setAlphaUp();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout8)).getChildAt(0)).setAlphaUp();
-        		break;
+        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
+        		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaUp();
         	}
         }
     };
@@ -354,61 +252,10 @@ public class MultiOverlaysActivity extends Activity
     OnClickListener mAlphaDownListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-        	switch(MAX_VIDEOS)
-        	{
-        	case 1:
-        		((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 2:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 3:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 4:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 5:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 6:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 7:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).setAlphaDown();
-        		break;
-        	case 8:
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout1)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout2)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout3)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout4)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout5)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout6)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout7)).getChildAt(0)).setAlphaDown();
-            	((SurfaceTextureView)((FrameLayout)findViewById(R.id.frameLayout8)).getChildAt(0)).setAlphaDown();
-        		break;
-        	}
+        	for (int flId = 0 ; flId < MAX_VIDEOS; flId++ ) {
+        		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
+        		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaDown();
+        	}        	
         }
     };
     
