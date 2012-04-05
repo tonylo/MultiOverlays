@@ -123,6 +123,12 @@
 	    android:layout_alignBottom="@+id/alphaUp"
 	    android:text="glClear() on" />
 	
+	<Button android:id="@+id/alignFrames"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toLeftOf="@+id/alphaDown"
+	    android:layout_alignBottom="@+id/alphaDown"
+	    android:text="align" />
 	
 	<TextView
 	    android:layout_width="wrap_content"
