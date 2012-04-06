@@ -1,5 +1,7 @@
 package com.multioverlays;
 
+import java.util.Random;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -34,15 +36,15 @@ class ClearGLSurfaceView extends GLSurfaceView {
     public void setAlphaUp() {
     	mChangingAlpha = true;
     	mCount2Frames = 0;
-    	if(mAlpha < 1)
-    		mAlpha += 0.1;
+//    	if(mAlpha < 1)
+//    		mAlpha += 0.1;
     }
     
     public void setAlphaDown() {
     	mChangingAlpha = true;
     	mCount2Frames = 0;
-    	if(mAlpha > 0.1)
-    		mAlpha -= 0.1;
+//    	if(mAlpha > 0.1)
+//    		mAlpha -= 0.1;
     }
     
     public void toggleClearEveryFrame() {
@@ -58,35 +60,43 @@ class ClearGLSurfaceView extends GLSurfaceView {
     }
 
     ClearRenderer mRenderer;
-    private float mAlpha = 0.3f;
+    
     private int mFrameCounter = 0;
     private int mCount2Frames = 0;
     private boolean mChangingAlpha = false;
-    private boolean mClearEveryFrame = false;
+    private boolean mClearEveryFrame = true;
     public double mTimeFPS;
-}
 
-class ClearRenderer implements GLSurfaceView.Renderer {
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        // Do nothing special.
+    class ClearRenderer implements GLSurfaceView.Renderer {
+    	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    		// Do nothing special.
+    		Random randColor = new Random();
+    		mRed = (float) (randColor.nextFloat());
+    		mGreen = (float) (randColor.nextFloat());
+    		mBlue = (float) (randColor.nextFloat());
+    	}
+
+    	public void onSurfaceChanged(GL10 gl, int w, int h) {
+    		gl.glViewport(0, 0, w, h);
+    	}
+
+    	public void onDrawFrame(GL10 gl) {
+    		if (mClearEveryFrame) {
+    			gl.glClearColor(mRed, mGreen, mBlue, mAlpha);
+    			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+    		}
+    		mFrameCounter++;
+    	}
+
+    	public void setColor(float r, float g, float b) {
+    		mRed = r;
+    		mGreen = g;
+    		mBlue = b;
+    	}
+
+    	private float mRed;
+    	private float mGreen;
+    	private float mBlue;
+    	private float mAlpha = 0.3f;
     }
-
-    public void onSurfaceChanged(GL10 gl, int w, int h) {
-        gl.glViewport(0, 0, w, h);
-    }
-
-    public void onDrawFrame(GL10 gl) {
-        gl.glClearColor(mRed, mGreen, mBlue, 1.0f);
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-    }
-
-    public void setColor(float r, float g, float b) {
-        mRed = r;
-        mGreen = g;
-        mBlue = b;
-    }
-
-    private float mRed;
-    private float mGreen;
-    private float mBlue;
 }

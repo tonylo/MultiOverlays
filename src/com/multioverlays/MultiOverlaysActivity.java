@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.multioverlays.R;
-import com.multioverlays.SurfaceTextureView;
+import com.multioverlays.ClearGLSurfaceView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,7 +44,7 @@ public class MultiOverlaysActivity extends Activity
     private int LAYER_HEIGHT = 768;
     private int[] mFrameViewIdArray;
     private int[] mTextViewIdArray;
-	private SurfaceTextureView[] mStvArray;
+	private ClearGLSurfaceView[] mStvArray;
 
 
     public void onCreate(Bundle icicle) {
@@ -209,7 +209,7 @@ public class MultiOverlaysActivity extends Activity
         	
         	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
-        		((SurfaceTextureView)(fl).getChildAt(0)).toggleClearEveryFrame();
+        		((ClearGLSurfaceView)(fl).getChildAt(0)).toggleClearEveryFrame();
         	}
         }
     };
@@ -219,7 +219,7 @@ public class MultiOverlaysActivity extends Activity
         public void onClick(View v) {
         	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
-        		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaUp();
+        		((ClearGLSurfaceView)(fl).getChildAt(0)).setAlphaUp();
         	}
         }
     };
@@ -229,7 +229,7 @@ public class MultiOverlaysActivity extends Activity
         public void onClick(View v) {
         	for (int flId = 0 ; flId < mNumLayers; flId++ ) {
         		FrameLayout fl = (FrameLayout)findViewById(getFrameViewId(flId));
-        		((SurfaceTextureView)(fl).getChildAt(0)).setAlphaDown();
+        		((ClearGLSurfaceView)(fl).getChildAt(0)).setAlphaDown();
         	}        	
         }
     };
@@ -240,11 +240,11 @@ public class MultiOverlaysActivity extends Activity
     
     private static class ourRunnable implements Runnable {
     	private TextView[] mTvArray;
-    	private SurfaceTextureView[] mStArray;
+    	private ClearGLSurfaceView[] mStArray;
     	private int mCount;    	
     	private TextView tvAVG;
 
-        public ourRunnable(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
+        public ourRunnable(int aCount, TextView[] aTvArray, TextView aTvAVG, ClearGLSurfaceView[] aStArray) {
         	tvAVG = aTvAVG; mCount = aCount; mTvArray = aTvArray; mStArray = aStArray;
         }
     	@Override
@@ -269,12 +269,12 @@ public class MultiOverlaysActivity extends Activity
     
     private static class UpdaterAVG extends TimerTask {
     	private TextView[] mTvArray;
-    	private SurfaceTextureView[] mStArray;
+    	private ClearGLSurfaceView[] mStArray;
     	private int mCount;    	
     	private TextView tvAVG;
     	private ourRunnable mOurRunnable;
 
-        public UpdaterAVG(int aCount, TextView[] aTvArray, TextView aTvAVG, SurfaceTextureView[] aStArray) {
+        public UpdaterAVG(int aCount, TextView[] aTvArray, TextView aTvAVG, ClearGLSurfaceView[] aStArray) {
         	tvAVG = aTvAVG; mCount = aCount; mTvArray = aTvArray; mStArray = aStArray;
         	mOurRunnable = new ourRunnable(mCount, mTvArray, tvAVG, mStArray);
         }
@@ -288,14 +288,14 @@ public class MultiOverlaysActivity extends Activity
     private void initSurfaceTextures()
     {
 		int maxid = mNumLayers;
-        mStvArray = new SurfaceTextureView[mNumLayers];
+        mStvArray = new ClearGLSurfaceView[mNumLayers];
 
 		TextView []tvArray = new TextView[maxid];
 		TextView tvAVG = (TextView)findViewById(R.id.textFPSAverage);
 		for (int i = 0; i < maxid; i++) {
 			int fvId = getFrameViewId(i);
 			FrameLayout fl = (FrameLayout)findViewById(fvId);
-			SurfaceTextureView stv = new SurfaceTextureView(this);
+			ClearGLSurfaceView stv = new ClearGLSurfaceView(this);
 			fl.addView(stv);
 			mStvArray[i] = stv;
 			tvArray[i] = (TextView)findViewById(getTextViewId(i));
