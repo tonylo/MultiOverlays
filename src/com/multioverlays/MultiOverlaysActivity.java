@@ -131,7 +131,7 @@ public class MultiOverlaysActivity extends Activity
                 	findViewById(id).setLayoutParams(p);
             	}
 
-            	initSurfaceTextures();
+            	initSurfaceViews();
     	    	((Button) findViewById(R.id.gobutton)).setVisibility(4);
     	    	((TextView) findViewById(R.id.textFPSAverage)).setVisibility(0);
     	    	((TextView) findViewById(R.id.textFPS1)).setVisibility(0);   
@@ -285,7 +285,7 @@ public class MultiOverlaysActivity extends Activity
         }
     }    
     
-    private void initSurfaceTextures()
+    private void initSurfaceViews()
     {
 		int maxid = mNumLayers;
         mStvArray = new ClearGLSurfaceView[mNumLayers];
