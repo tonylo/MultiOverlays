@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -296,6 +297,7 @@ public class MultiOverlaysActivity extends Activity
 			int fvId = getFrameViewId(i);
 			FrameLayout fl = (FrameLayout)findViewById(fvId);
 			ClearGLSurfaceView stv = new ClearGLSurfaceView(this);
+			stv.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 			fl.addView(stv);
 			mStvArray[i] = stv;
 			tvArray[i] = (TextView)findViewById(getTextViewId(i));

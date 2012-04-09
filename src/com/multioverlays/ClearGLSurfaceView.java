@@ -16,15 +16,6 @@ class ClearGLSurfaceView extends GLSurfaceView {
         setRenderer(mRenderer);
     }
 
-//    public boolean onTouchEvent(final MotionEvent event) {
-//        queueEvent(new Runnable(){
-//            public void run() {
-//                mRenderer.setColor(event.getX() / getWidth(),
-//                        event.getY() / getHeight(), 1.0f);
-//            }});
-//            return true;
-//        }
-
     public void resetFrameCounter() {
     	mFrameCounter = 0;
     }
@@ -36,15 +27,15 @@ class ClearGLSurfaceView extends GLSurfaceView {
     public void setAlphaUp() {
     	mChangingAlpha = true;
     	mCount2Frames = 0;
-//    	if(mAlpha < 1)
-//    		mAlpha += 0.1;
+    	if(mAlpha < 1)
+    		mAlpha += 0.1;
     }
     
     public void setAlphaDown() {
     	mChangingAlpha = true;
     	mCount2Frames = 0;
-//    	if(mAlpha > 0.1)
-//    		mAlpha -= 0.1;
+    	if(mAlpha > 0.1)
+    		mAlpha -= 0.1;
     }
     
     public void toggleClearEveryFrame() {
@@ -66,6 +57,7 @@ class ClearGLSurfaceView extends GLSurfaceView {
     private boolean mChangingAlpha = false;
     private boolean mClearEveryFrame = true;
     public double mTimeFPS;
+    private float mAlpha = 0.3f;
 
     class ClearRenderer implements GLSurfaceView.Renderer {
     	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -82,7 +74,7 @@ class ClearGLSurfaceView extends GLSurfaceView {
 
     	public void onDrawFrame(GL10 gl) {
     		if (mClearEveryFrame) {
-    			gl.glClearColor(mRed, mGreen, mBlue, mAlpha);
+    			gl.glClearColor(mRed * mAlpha, mGreen * mAlpha, mBlue * mAlpha, mAlpha);
     			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
     		}
     		mFrameCounter++;
@@ -97,6 +89,5 @@ class ClearGLSurfaceView extends GLSurfaceView {
     	private float mRed;
     	private float mGreen;
     	private float mBlue;
-    	private float mAlpha = 0.3f;
     }
 }
